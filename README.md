@@ -1,26 +1,25 @@
-# DeepBam
+# DeepBam: High-Accuracy CpG Methylation Calling with Nanopore Sequencing
 
 ## Brief Introduction
 
-Recent nanopore sequencing system (R10.4) has enhanced base calling accuracy and is being increasingly utilized for determining the methylation state of genomic CpGs. However, the robustness and universality of its methylation calling model in officially supplied Dorado remains poorly tested. In this study, we obtained heterogeneous datasets from human and plant sources to carry out comprehensive evaluations, which showed that Dorado displays significantly different performances across the datasets. Therefore, we developed deep neural networks and trained a nanopore-based CpG methylation calling model called DeepBam. DeepBam achieved superior and more stable areas under the receiver operating characteristic curves (97.80% on average), balanced accuracies (95.96%), and F1 scores (94.97%) across the datasets. DeepBam-based methylation frequency had >0.95 correlations with BS-seq on four of five datasets, outperforming Dorado in all instances. We also showed that DeepBam enables uncovering haplotype-specific methylation patterns including partial repetitive regions. The enhanced performance of DeepBAM paves the way for broader applications of nanopore sequencing in CpG methylation studies.
+The recent R10.4 nanopore sequencing system offers improved base-calling accuracy and growing potential for genomic CpG methylation analysis. However, the official Dorado model demonstrates inconsistent performance across datasets. To address this, we developed **DeepBam**, a robust deep neural network-based CpG methylation calling model.
 
-DeepBam is a specialized training and inference framework for Oxford Nanopore sequencing data. The model leverages Bi-LSTM architecture and is implemented in Python for training. For feature extraction and modification calling, it utilizes C++ integrated with libtorch.
+DeepBam achieves superior accuracy and stability, with an average AUC of 97.80%, balanced accuracy of 95.96%, and F1 score of 94.97% across diverse human and plant datasets. It outperforms Dorado with methylation frequency correlations exceeding 0.95 compared to BS-seq in most datasets and reveals haplotype-specific methylation patterns, even in partially repetitive regions.
+
+Built on Bi-LSTM architecture, DeepBam integrates Python for training and C++ with libtorch for high-performance feature extraction and modification calling, offering unmatched precision and scalability for nanopore-based CpG methylation studies.
+
+### Key Features
+
+1. Efficiently read input data (pod5 and bam) using **lib-pod5** and **htslib**.  
+2. Implement efficient feature extraction from large volumes of pod5 and BAM files with a thread pool.  
+3. Continuously optimize CPU memory usage and runtime performance.  
+4. Perform GPU inference with half-precision to significantly improve model efficiency with minimal impact on accuracy.  
 
 ## Building from Scratch
 
-### Preparing the Python Environment
-
-Create a virtual environment using Conda. The Python scripts require numpy (version 20.0 or higher) and pytorch (version 2.0 or higher) with CUDA 11.8 support.
-
-```bash
-conda create -n DeepBam python=3.11
-conda activate DeepBam
-pip install numpy torch==2.0.1
-```
-
 ### Building the C++ Program
 
-DeepBam was tested and runed in **NVIDIA GeForce RTX 3090**,  ensure you have a **GPU** and **CUDA Toolkit 11.8** installed.  Download **libtorch 2.0.1** if it's not already included in your Python environment. This C++ program is compiled using g++-11.2 on Ubuntu 22.04. Compatibility issues may arise on other systems, so feel free to raise an issue if you encounter any problems.
+DeepBam was tested and optimized in **NVIDIA GeForce RTX 3090**,  ensure you have a **GPU** and **CUDA Toolkit 11.8** installed.  Download **libtorch 2.0.1** if it's not already included in your Python environment. This C++ program is compiled using g++-11.2 on Ubuntu 22.04. Compatibility issues may arise on other systems, so feel free to raise an issue if you encounter any problems.
 
 **If you are not familiar about how to install CUDA Toolkit 11.8, here is a example for set up CUDA Toolkit 11.8 in ubuntu 22.04 x86_64 system**
 
@@ -138,5 +137,8 @@ You could find trained  torch script modules in `traced_script_module` file that
 
 ## Publication
 
-...
+Our work has been published in [Brifings in Bioinformatics](https://doi.org/10.1093/bib/bbae413). If you used this project in your research, please cite 
+```
+Xin Bai, Hui-Cong Yao, Bo Wu, Luo-Ran Liu, Yu-Ying Ding, Chuan-Le Xiao, DeepBAM: a high-accuracy single-molecule CpG methylation detection tool for Oxford nanopore sequencing, Briefings in Bioinformatics, Volume 25, Issue 5, September 2024, bbae413, https://doi.org/10.1093/bib/bbae413
+```
 
